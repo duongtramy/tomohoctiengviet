@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tò Mò Học Tiếng Việt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tò Mò Học Tiếng Việt: mỗi tuần một bài ngữ pháp, làm bài có chấm chữa, có cô đồng hành.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: vở ô li — hero on Vietnamese school grid paper with a red margin line, mực tím ink accent, highlighter on key words; flow ends in a 3-step checkout. */
+:root{
+  --paper:#F6F7FB; --card:#FFFFFF; --ink:#141B33; --muted:#59627A; --line:#DCE1EC;
+  --accent:#5A35C8; --accent-ink:#FFFFFF; --margin:#E2475B; --hl:#FFE14D; --hl-soft:#FFF4B8;
+  --ok:#1F8A4C; --err:#C2322B; --grid:rgba(90,53,200,.06); --grid-b:rgba(90,53,200,.13);
+  --f-display:"Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
+  --f-body:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0E1222; --card:#161B2F; --ink:#E9EDF7; --muted:#9BA4BA; --line:#2A3250;
+  --accent:#A58BFF; --accent-ink:#0E1222; --margin:#FF6B7D; --hl:rgba(255,215,64,.38); --hl-soft:rgba(255,215,64,.12);
+  --ok:#5BD08B; --err:#FF7A70; --grid:rgba(165,139,255,.06); --grid-b:rgba(165,139,255,.13); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0E1222; --card:#161B2F; --ink:#E9EDF7; --muted:#9BA4BA; --line:#2A3250;
+  --accent:#A58BFF; --accent-ink:#0E1222; --margin:#FF6B7D; --hl:rgba(255,215,64,.38); --hl-soft:rgba(255,215,64,.12);
+  --ok:#5BD08B; --err:#FF7A70; --grid:rgba(165,139,255,.06); --grid-b:rgba(165,139,255,.13); color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.65 var(--f-body)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.12}
+h1{font-weight:800;font-size:clamp(2.1rem,5.2vw,3.6rem);letter-spacing:-.02em}
+h2{font-weight:800;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+h3{font-weight:600;font-size:1.12rem}
+p{margin:0}
+.lede{color:var(--muted);font-size:1.08rem;max-width:58ch}
+.eyebrow{font:500 .76rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.hl{background:linear-gradient(transparent 52%, var(--hl) 52%, var(--hl) 92%, transparent 92%);padding:0 .08em}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* header */
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600}
+.mark{width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:800 .95rem var(--f-display)}
+.brand small{display:block;color:var(--muted);font-weight:400;font-size:.8rem;line-height:1.2}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:600 1rem var(--f-body);text-decoration:none;border-radius:999px;padding:.8em 1.4em;background:var(--accent);color:var(--accent-ink);transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.small{padding:.5em 1em;font-size:.9rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+
+/* hero */
+.hero{position:relative;background-image:linear-gradient(var(--grid-b) 1px,transparent 1px),linear-gradient(90deg,var(--grid-b) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:40px 40px,40px 40px,10px 10px,10px 10px;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;top:0;bottom:0;left:max(8px,calc(50% - 556px));width:2px;background:var(--margin);opacity:.55}
+.hero .wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center;padding-block:64px}
+.hero-copy{display:grid;gap:20px;min-width:0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero-actions span{color:var(--muted);font-size:.92rem}
+.week{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 18px 40px -24px rgba(40,20,90,.35);display:grid;gap:16px;transform:rotate(1.2deg)}
+.week-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.week-head b{font:800 1.3rem var(--f-display)}
+.tag{font:500 .72rem var(--f-mono);letter-spacing:.06em;padding:4px 8px;border-radius:6px;background:var(--hl-soft);color:var(--ink);white-space:nowrap}
+.check{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px dashed var(--line);border-radius:10px}
+.box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem;margin-top:2px}
+.check li.done .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.check li.done .t{text-decoration:line-through;color:var(--muted)}
+.check .t small{display:block;color:var(--muted);font-size:.82rem;text-decoration:none}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:17%;background:var(--accent);border-radius:inherit}
+.bar-l{display:flex;justify-content:space-between;font:500 .78rem var(--f-mono);color:var(--muted)}
+
+/* sections */
+section.block .wrap{padding-block:72px;display:grid;gap:32px}
+.sec-head{display:grid;gap:10px}
+
+/* courses */
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.course{all:unset;box-sizing:border-box;cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:14px;align-content:start;transition:border-color .15s, transform .15s}
+.course:hover{transform:translateY(-2px)}
+.course:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.course[aria-checked="true"]{border-color:var(--accent);box-shadow:0 0 0 4px var(--hl-soft)}
+.course .lvl{font:800 2.2rem/1 var(--f-display);letter-spacing:-.02em}
+.course .cefr{font:500 .75rem var(--f-mono);color:var(--muted);letter-spacing:.06em}
+.course ul{margin:0;padding-left:1.1em;color:var(--muted);font-size:.95rem;display:grid;gap:4px}
+.course .price{font:800 1.4rem var(--f-display);font-variant-numeric:tabular-nums}
+.course .price small{font:400 .85rem var(--f-body);color:var(--muted)}
+.course .pick{font-weight:600;font-size:.9rem;color:var(--accent)}
+.course[aria-checked="true"] .pick::before{content:"✓ "}
+
+/* features */
+.band{background:var(--card);border-block:1px solid var(--line)}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px 36px}
+.feat{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.glyph{width:42px;height:42px;border-radius:12px;background:var(--hl-soft);display:grid;place-items:center;color:var(--ink)}
+.glyph svg{width:22px;height:22px}
+.feat p{color:var(--muted);font-size:.96rem;margin-top:4px}
+.demo{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;padding:20px 22px;border-radius:16px;background:var(--paper);border:1.5px dashed var(--accent)}
+.demo p{color:var(--muted)}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.steps li{counter-increment:s;padding:22px;border-top:3px solid var(--ink);display:grid;gap:8px;align-content:start}
+.steps li::before{content:"Bước " counter(s);font:500 .75rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.steps p{color:var(--muted)}
+.loop{color:var(--muted);font-size:.95rem}
+
+/* register flow */
+.flow{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start}
+.stepper{list-style:none;margin:0;padding:0;display:grid;gap:4px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px)}
+.stepper li{display:flex;gap:12px;align-items:center;padding:10px 0;color:var(--muted)}
+.stepper .n{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font:500 .85rem var(--f-mono)}
+.stepper li.on{color:var(--ink);font-weight:600}
+.stepper li.on .n{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.stepper li.past .n{border-color:var(--ok);color:var(--ok)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;display:grid;gap:20px;min-width:0}
+.panel>p{color:var(--muted)}
+form{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:6px;min-width:0}
+label{font-weight:600;font-size:.92rem}
+label .opt{font-weight:400;color:var(--muted)}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:.7em .85em;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--hl-soft)}
+.field.bad input{border-color:var(--err)}
+.msg{font-size:.85rem;color:var(--err)}
+.summary{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 16px;border-radius:12px;background:var(--hl-soft);flex-wrap:wrap}
+.summary b{font:800 1.2rem var(--f-display);font-variant-numeric:tabular-nums}
+
+.pay{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+.qr{width:220px;max-width:100%;background:#fff;border-radius:14px;padding:10px;border:1px solid var(--line)}
+.qr img{display:block;width:100%;height:auto}
+.qr-note{font-size:.82rem;color:var(--muted);margin-top:8px;max-width:220px}
+dl.bank{margin:0;display:grid;gap:0}
+.bank div{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.bank dt{color:var(--muted);font-size:.9rem}
+.bank dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;min-width:0}
+.copy{all:unset;cursor:pointer;font:500 .78rem var(--f-mono);color:var(--accent);padding:4px 8px;border-radius:6px;border:1px solid var(--line)}
+.copy:focus-visible{outline:2px solid var(--accent)}
+.copy.ok{color:var(--ok);border-color:var(--ok)}
+.warn{font-size:.9rem;padding:10px 14px;border-radius:10px;background:var(--hl-soft)}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.done-mark{width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:1.6rem}
+.todo{margin:0;padding-left:1.2em;display:grid;gap:10px}
+.todo li::marker{font-family:var(--f-mono);color:var(--accent)}
+.preview{white-space:pre-wrap;font:400 .88rem/1.5 var(--f-mono);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto}
+
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-block:44px;gap:36px}
+  .week{transform:none}
+  .courses,.steps{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr;gap:20px}
+  .stepper{position:static;display:flex;gap:16px;flex-wrap:wrap}
+  .stepper li{padding:0}
+  .stepper li span:last-child{display:none}
+  .stepper li.on span:last-child{display:inline}
+  .pay{grid-template-columns:1fr;justify-items:start}
+}
+@media (max-width:520px){
+  .row2{grid-template-columns:1fr}
+  .panel{padding:20px}
+  section.block .wrap{padding-block:52px}
+  .bank div{grid-template-columns:1fr auto}
+  .bank dt{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="mark" id="brandMark">?!</span><span><span id="brandName">Tò Mò Học Tiếng Việt</span><small id="brandTag">Ngữ pháp tiếng Việt cho học sinh tiểu học</small></span></div>
+    <a class="btn small" href="#dang-ky">Đăng ký</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Ngữ pháp tiếng Việt · Lớp 2 đến lớp 5</span>
+      <h1>Vì sao <span class="hl">“con mèo”</span> là danh từ? Học ngữ pháp bằng sự tò mò</h1>
+      <p class="lede">Mỗi tuần một bài: từ loại, câu, dấu câu, biện pháp tu từ. Con đọc bài, làm bài có chấm chữa, viết một đoạn văn ngắn. Cô theo dõi và nhận xét suốt hành trình.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#dang-ky">Đăng ký ngay</a>
+        <a class="btn ghost" href="#khoa-hoc">Xem các khóa</a>
+      </div>
+    </div>
+    <aside class="week" aria-label="Ví dụ một tuần học">
+      <div class="week-head"><b>Danh từ chung, danh từ riêng</b><span class="tag">TUẦN 5/30</span></div>
+      <ul class="check">
+        <li class="done"><span class="box">✓</span><span class="t">Đọc bài và ghi sổ tay<small>Vì sao “Hà Nội” viết hoa còn “thành phố” thì không?</small></span></li>
+        <li class="done"><span class="box">✓</span><span class="t">Làm bài trên web<small>18/20 câu đúng · đã xem giải thích</small></span></li>
+        <li><span class="box"></span><span class="t">Viết đoạn văn 5 câu<small>Kể về một người bạn, gạch chân danh từ riêng</small></span></li>
+      </ul>
+      <div>
+        <div class="bar-l"><span>Tiến độ cả khóa</span><span>17%</span></div>
+        <div class="bar"><i></i></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="block" id="khoa-hoc">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Chọn khóa</span>
+      <h2>Chọn khóa theo lớp của con</h2>
+      <p class="lede">Bấm vào thẻ để chọn. Bạn vẫn có thể đổi lại trong form đăng ký.</p>
+    </div>
+    <div class="courses" role="radiogroup" aria-label="Khóa học" id="courses"></div>
+  </div>
+</section>
+
+<section class="block band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Có ở cả 3 khóa</span>
+      <h2>Bài tập trực tuyến, có <span class="hl">chấm chữa chi tiết</span></h2>
+      <p class="lede">Con làm bài ở nhà thì khó biết mình sai ở đâu, vì sao sai và cần ôn lại gì. Hệ thống bài tập trên web giải quyết đúng chuyện đó.</p>
+    </div>
+    <div class="feats" id="feats"></div>
+    <div class="demo">
+      <div><h3>Làm thử bài demo miễn phí</h3><p>Trải nghiệm chấm chữa và giải thích trước khi đăng ký.</p></div>
+      <a class="btn ghost" id="demoLink" href="#" target="_blank" rel="noopener">Làm bài demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Phương pháp</span>
+      <h2>Cách học mỗi bài</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Đọc bài và ghi sổ tay</h3><p>Xem bài giảng ngắn, chép quy tắc và ví dụ vào sổ tay ngữ pháp bằng lời của con.</p></li>
+      <li><h3>Làm bài tập</h3><p>Làm bài trên web, có điểm và giải thích ngay cho từng câu.</p></li>
+      <li><h3>Viết đoạn văn ngắn</h3><p>Dùng kiến thức vừa học để viết 4–6 câu. Cô đọc, sửa lỗi và nhận xét.</p></li>
+    </ol>
+    <p class="loop">Lặp lại cho mọi bài, xen kẽ bài ôn tập và bài kiểm tra cuối mỗi chủ đề.</p>
+  </div>
+</section>
+
+<section class="block band" id="dang-ky">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Đăng ký</span>
+      <h2>Ba bước để bắt đầu</h2>
+    </div>
+    <div class="flow">
+      <ol class="stepper" id="stepper">
+        <li class="on"><span class="n">1</span><span>Điền thông tin</span></li>
+        <li><span class="n">2</span><span>Chuyển khoản</span></li>
+        <li><span class="n">3</span><span>Xác nhận qua Zalo</span></li>
+      </ol>
+
+      <!-- step 1 -->
+      <div class="panel" id="s1">
+        <div><h3>Thông tin đăng ký</h3></div>
+        <p>Điền thông tin, bước tiếp theo sẽ hiện mã QR để chuyển khoản.</p>
+        <form id="regForm" novalidate>
+          <div class="field">
+            <label for="fCourse">Khóa học</label>
+            <select id="fCourse"></select>
+          </div>
+          <div class="row2">
+            <div class="field" id="wName">
+              <label for="fName">Họ và tên học sinh</label>
+              <input id="fName" autocomplete="name" placeholder="Nguyễn Minh Anh">
+              <span class="msg" hidden>Vui lòng nhập họ tên.</span>
+            </div>
+            <div class="field" id="wPhone">
+              <label for="fPhone">Số điện thoại Zalo</label>
+              <input id="fPhone" inputmode="tel" autocomplete="tel" placeholder="0912345678">
+              <span class="msg" hidden>Số điện thoại cần 10 số, bắt đầu bằng 0.</span>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field" id="wEmail">
+              <label for="fEmail">Email <span class="opt">(không bắt buộc)</span></label>
+              <input id="fEmail" type="email" autocomplete="email" placeholder="ban@email.com">
+              <span class="msg" hidden>Email chưa đúng định dạng, ví dụ ten@gmail.com.</span>
+            </div>
+            <div class="field">
+              <label for="fLevel">Trình độ hiện tại <span class="opt">(không bắt buộc)</span></label>
+              <input id="fLevel" placeholder="Ví dụ: lớp 3, hay nhầm dấu phẩy">
+            </div>
+          </div>
+          <div class="field">
+            <label for="fNote">Ghi chú <span class="opt">(không bắt buộc)</span></label>
+            <textarea id="fNote" rows="3" placeholder="Điều bạn muốn cô biết thêm"></textarea>
+          </div>
+          <div class="summary"><span id="sumCourse">Nền tảng</span><b id="sumPrice">—</b></div>
+          <div class="actions"><button class="btn" type="submit">Tiếp tục thanh toán</button></div>
+        </form>
+      </div>
+
+      <!-- step 2 -->
+      <div class="panel" id="s2" hidden>
+        <div><h3>Chuyển khoản học phí</h3></div>
+        <p>Mở app ngân hàng và quét mã QR. Số tiền và nội dung đã điền sẵn.</p>
+        <div class="pay">
+          <div>
+            <div class="qr"><img id="qrImg" alt="Mã QR chuyển khoản VietQR"></div>
+            <p class="qr-note">Thanh toán trên chính điện thoại này? Nhấn giữ ảnh QR để lưu, rồi mở app ngân hàng và chọn quét QR từ ảnh.</p>
+          </div>
+          <dl class="bank" id="bank"></dl>
+        </div>
+        <p class="warn">Vui lòng giữ đúng nội dung chuyển khoản để cô xác nhận nhanh.</p>
+        <div class="actions">
+          <button class="btn" id="paid" type="button">Đã chuyển khoản, gửi xác nhận</button>
+          <button class="btn ghost" id="back" type="button">Sửa thông tin</button>
+        </div>
+      </div>
+
+      <!-- step 3 -->
+      <div class="panel" id="s3" hidden>
+        <span class="done-mark" aria-hidden="true">✓</span>
+        <h3>Cảm ơn bạn đã đăng ký</h3>
+        <p>Còn 2 việc nhỏ để bắt đầu học:</p>
+        <ol class="todo">
+          <li><b>Gửi xác nhận cho cô qua Zalo.</b> Tin nhắn bên dưới đã được sao chép. Mở Zalo, dán tin nhắn và gửi kèm ảnh chụp màn hình chuyển khoản.</li>
+          <li><b>Vào nhóm Zalo lớp học</b> để nhận lịch học, link bài tập và thông báo hằng tuần.</li>
+        </ol>
+        <div class="preview" id="msgPreview"></div>
+        <div class="actions">
+          <a class="btn" id="zaloGroup" href="#" target="_blank" rel="noopener">Vào nhóm Zalo lớp học</a>
+          <a class="btn ghost" id="zaloMe" href="#" target="_blank" rel="noopener">Mở Zalo của cô</a>
+          <button class="btn ghost" id="recopy" type="button">Sao chép lại tin nhắn</button>
+        </div>
+        <p class="loop">Zalo của cô: <b id="zaloPhone"></b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span id="foot">© Tò Mò Học Tiếng Việt</span><span>Zalo: <b id="footZalo"></b></span></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+/* ============ CHỈNH SỬA THÔNG TIN Ở ĐÂY ============ */
+const CONFIG = {
+  teacher: "Tò Mò Học Tiếng Việt",
+  initials: "?!",
+  tagline: "Ngữ pháp tiếng Việt cho học sinh tiểu học",
+  zaloPhone: "0912345678",                       // số Zalo của cô
+  zaloGroup: "https://zalo.me/g/xxxxxxxx",       // link nhóm Zalo lớp
+  demoUrl: "https://example.com/demo",           // link bài demo
+  bank: {
+    bin: "970436",               // mã BIN ngân hàng (970436 = Vietcombank, 970422 = MB, 970407 = Techcombank, 970415 = VietinBank, 970418 = BIDV)
+    name: "Vietcombank",
+    account: "0123456789",
+    owner: "NGUYEN VAN A"
+  },
+  courses: [
+    { id:"NT", name:"Nền tảng", cefr:"LỚP 2 – LỚP 3", price:399000, weeks:30,
+      points:["Từ chỉ sự vật, hoạt động, đặc điểm","Câu giới thiệu, câu nêu hoạt động","Dấu chấm, dấu phẩy, dấu chấm hỏi"] },
+    { id:"VV", name:"Vững vàng", cefr:"LỚP 4", price:449000, weeks:30,
+      points:["Danh từ, động từ, tính từ","Chủ ngữ, vị ngữ, trạng ngữ","Nhân hóa, dấu gạch ngang"] },
+    { id:"NC", name:"Nâng cao", cefr:"LỚP 5", price:499000, weeks:30,
+      points:["Từ đồng nghĩa, trái nghĩa, đa nghĩa","Câu ghép và cách nối các vế câu","Liên kết câu, điệp từ, điệp ngữ"] }
+  ]
+};
+/* =================================================== */
+
+const $ = s => document.querySelector(s);
+const vnd = n => n.toLocaleString("vi-VN") + "đ";
+let selected = CONFIG.courses[0].id;
+
+// branding
+$("#brandMark").textContent = CONFIG.initials;
+$("#brandName").textContent = CONFIG.teacher;
+$("#brandTag").textContent = CONFIG.tagline;
+$("#foot").textContent = "© " + CONFIG.teacher;
+$("#footZalo").textContent = CONFIG.zaloPhone;
+$("#zaloPhone").textContent = CONFIG.zaloPhone;
+$("#demoLink").href = CONFIG.demoUrl;
+$("#zaloGroup").href = CONFIG.zaloGroup;
+$("#zaloMe").href = "https://zalo.me/" + CONFIG.zaloPhone;
+
+// courses
+const box = $("#courses"), sel = $("#fCourse");
+CONFIG.courses.forEach(c => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "course"; b.setAttribute("role","radio"); b.dataset.id = c.id;
+  b.innerHTML = `<span class="cefr">${c.cefr}</span><span class="lvl">${c.name}</span>
+    <ul>${c.points.map(p=>`<li>${p}</li>`).join("")}</ul>
+    <span class="price">${vnd(c.price)} <small>/ ${c.weeks} tuần</small></span><span class="pick">Chọn khóa này</span>`;
+  b.onclick = () => { choose(c.id); };
+  box.appendChild(b);
+  sel.add(new Option(`${c.name} (${c.cefr.toLowerCase()}) · ${vnd(c.price)}`, c.id));
+});
+sel.onchange = () => choose(sel.value, true);
+function choose(id, fromSelect){
+  selected = id;
+  document.querySelectorAll(".course").forEach(b => b.setAttribute("aria-checked", b.dataset.id===id));
+  sel.value = id;
+  const c = course();
+  $("#sumCourse").textContent = "Khóa " + c.name + " · " + c.cefr.toLowerCase(); $("#sumPrice").textContent = vnd(c.price);
+}
+const course = () => CONFIG.courses.find(c => c.id === selected);
+choose(selected);
+
+// features
+const ICON = {
+  web:'<path d="M3 5h18v12H3zM8 21h8M12 17v4"/>',
+  check:'<path d="M4 12l5 5L20 6"/>',
+  book:'<path d="M4 4h7a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-5a3 3 0 00-3 3"/>',
+  target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>',
+  note:'<path d="M5 3h10l4 4v14H5zM9 11h6M9 15h6"/>'
+};
+[
+  ["web","Làm bài trực tiếp trên web","Mỗi bài có bộ câu hỏi luyện tập, con làm xong là xem kết quả ngay."],
+  ["check","Chấm chữa và giải thích","Biết câu nào sai và vì sao, kèm quy tắc ngắn gọn và ví dụ dễ hiểu cho lứa tuổi tiểu học."],
+  ["book","Mở rộng vốn từ","Từ láy, từ ghép, thành ngữ, tục ngữ và những từ hay dùng nhầm như “tham quan” và “thăm quan”."],
+  ["target","Tổng kết lỗi sai của con","Sau mỗi bài, con nhận danh sách lỗi hay gặp: viết hoa, dấu câu, dùng từ, câu thiếu thành phần."],
+  ["note","Sổ tay ngữ pháp","Con tự ghi quy tắc vào sổ tay, ôn lại thường xuyên để không lặp lại lỗi cũ."]
+].forEach(([i,t,d]) => {
+  const el = document.createElement("div"); el.className = "feat";
+  el.innerHTML = `<span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[i]}</svg></span><div><h3>${t}</h3><p>${d}</p></div>`;
+  $("#feats").appendChild(el);
+});
+
+// form
+const v = {
+  name: () => $("#fName").value.trim().length > 1,
+  phone: () => /^0\d{9}$/.test($("#fPhone").value.replace(/[\s.]/g,"")),
+  email: () => !$("#fEmail").value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($("#fEmail").value.trim())
+};
+function mark(id, ok){ const w=$(id); w.classList.toggle("bad",!ok); w.querySelector(".msg").hidden = ok; }
+$("#regForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const a=v.name(), b=v.phone(), c=v.email();
+  mark("#wName",a); mark("#wPhone",b); mark("#wEmail",c);
+  if(!(a&&b&&c)){ document.querySelector(".field.bad input").focus(); return; }
+  buildPayment(); go(2);
+});
+
+// VietQR (EMVCo) payload
+function tlv(id, val){ return id + String(val.length).padStart(2,"0") + val; }
+function crc16(s){ let c=0xFFFF; for(let i=0;i<s.length;i++){ c^=s.charCodeAt(i)<<8; for(let j=0;j<8;j++) c = (c&0x8000)?((c<<1)^0x1021):(c<<1); c&=0xFFFF; } return c.toString(16).toUpperCase().padStart(4,"0"); }
+function stripVN(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9 ]/g,"").replace(/\s+/g," ").trim().toUpperCase(); }
+function vietqr(amount, content){
+  const B = CONFIG.bank;
+  const acc = tlv("00","A000000727") + tlv("01", tlv("00",B.bin) + tlv("01",B.account)) + tlv("02","QRIBFTTA");
+  let p = tlv("00","01") + tlv("01","12") + tlv("38",acc) + tlv("53","704") + tlv("54",String(amount)) + tlv("58","VN") + tlv("62", tlv("08",content)) + "6304";
+  return p + crc16(p);
+}
+let transferNote = "";
+function buildPayment(){
+  const c = course(), phone = $("#fPhone").value.replace(/[\s.]/g,"");
+  transferNote = stripVN(`${c.id} ${$("#fName").value} ${phone}`).slice(0,50);
+  try{
+    const qr = qrcode(0,"M"); qr.addData(vietqr(c.price, transferNote)); qr.make();
+    $("#qrImg").src = qr.createDataURL(6, 2);
+  }catch(err){ $("#qrImg").alt = "Không tạo được mã QR, vui lòng chuyển khoản theo thông tin bên cạnh."; }
+  const rows = [["Ngân hàng",CONFIG.bank.name,false],["Số tài khoản",CONFIG.bank.account,true],["Chủ tài khoản",CONFIG.bank.owner,false],["Số tiền",vnd(c.price),String(c.price)],["Nội dung CK",transferNote,true]];
+  $("#bank").innerHTML = rows.map(([k,val,cp]) => `<div><dt>${k}</dt><dd>${val}</dd>${cp?`<button class="copy" type="button" data-v="${cp===true?val:cp}">Sao chép</button>`:"<span></span>"}</div>`).join("");
+}
+async function copyText(t, btn){
+  try{ await navigator.clipboard.writeText(t); if(btn){ btn.textContent="Đã chép"; btn.classList.add("ok"); setTimeout(()=>{btn.textContent=btn.dataset.label||"Sao chép";btn.classList.remove("ok")},1600);} return true; }
+  catch(e){ const r=document.createRange(); const n=btn&&btn.previousElementSibling; if(n){r.selectNodeContents(n); const s=getSelection(); s.removeAllRanges(); s.addRange(r);} return false; }
+}
+$("#bank").addEventListener("click", e => { const b=e.target.closest(".copy"); if(b) copyText(b.dataset.v, b); });
+
+function confirmMsg(){
+  const c = course();
+  return `Chào cô, em đã đăng ký khóa ${c.name} (${c.cefr.toLowerCase()}).\nHọ tên: ${$("#fName").value.trim()}\nSĐT Zalo: ${$("#fPhone").value.trim()}`
+    + ($("#fEmail").value.trim() ? `\nEmail: ${$("#fEmail").value.trim()}` : "")
+    + ($("#fLevel").value.trim() ? `\nTrình độ: ${$("#fLevel").value.trim()}` : "")
+    + `\nĐã chuyển khoản ${vnd(c.price)}, nội dung: ${transferNote}\n(Em gửi kèm ảnh chụp chuyển khoản)`;
+}
+$("#paid").onclick = () => { const m = confirmMsg(); $("#msgPreview").textContent = m; copyText(m); go(3); };
+$("#recopy").onclick = e => { e.currentTarget.dataset.label = "Sao chép lại tin nhắn"; copyText(confirmMsg(), e.currentTarget); };
+$("#back").onclick = () => go(1);
+
+function go(n){
+  [1,2,3].forEach(i => $("#s"+i).hidden = i!==n);
+  document.querySelectorAll("#stepper li").forEach((li,i) => { li.className = i+1===n ? "on" : (i+1<n ? "past" : ""); });
+  $("#dang-ky").scrollIntoView({block:"start"});
+}
+</script>
+</body>
+</html>
