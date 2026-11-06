@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<title>Phiếu 02 · Niềm tin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: vở ô li worksheet — reading passage pinned left like the text in the textbook, questions in a column right; mực tím ink for marks, green/red only after grading. */
+:root{
+  --paper:#F6F7FB; --card:#FFFFFF; --ink:#141B33; --muted:#59627A; --line:#DCE1EC;
+  --accent:#5A35C8; --accent-ink:#FFFFFF; --accent-soft:#EEE9FF; --margin:#E2475B;
+  --hl:#FFE14D; --hl-soft:#FFF4B8;
+  --ok:#1F8A4C; --ok-soft:#E3F5EA; --err:#C2322B; --err-soft:#FCE8E6;
+  --grid:rgba(90,53,200,.06); --grid-b:rgba(90,53,200,.12);
+  --f-display:"Bricolage Grotesque","Be Vietnam Pro",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-read:"Lora",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0E1222; --card:#161B2F; --ink:#E9EDF7; --muted:#9BA4BA; --line:#2A3250;
+  --accent:#A58BFF; --accent-ink:#0E1222; --accent-soft:rgba(165,139,255,.16); --margin:#FF6B7D;
+  --hl:rgba(255,215,64,.38); --hl-soft:rgba(255,215,64,.12);
+  --ok:#5BD08B; --ok-soft:rgba(91,208,139,.14); --err:#FF7A70; --err-soft:rgba(255,122,112,.14);
+  --grid:rgba(165,139,255,.06); --grid-b:rgba(165,139,255,.12); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0E1222; --card:#161B2F; --ink:#E9EDF7; --muted:#9BA4BA; --line:#2A3250;
+  --accent:#A58BFF; --accent-ink:#0E1222; --accent-soft:rgba(165,139,255,.16); --margin:#FF6B7D;
+  --hl:rgba(255,215,64,.38); --hl-soft:rgba(255,215,64,.12);
+  --ok:#5BD08B; --ok-soft:rgba(91,208,139,.14); --err:#FF7A70; --err-soft:rgba(255,122,112,.14);
+  --grid:rgba(165,139,255,.06); --grid-b:rgba(165,139,255,.12); color-scheme:dark }
+
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.65 var(--f-body)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.eyebrow{font:500 .74rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+
+/* sheet head */
+.head{border-bottom:1px solid var(--line);background-image:linear-gradient(var(--grid-b) 1px,transparent 1px),linear-gradient(90deg,var(--grid-b) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:40px 40px,40px 40px,10px 10px,10px 10px}
+.head .wrap{padding-block:28px 24px;display:grid;gap:18px}
+.brandline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center;font-weight:600}
+.mark{width:34px;height:34px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:800 .9rem var(--f-display)}
+h1{font-weight:800;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill.cta{color:var(--accent);border-color:var(--accent);text-decoration:none;font-weight:600}
+.pill{font:500 .78rem var(--f-mono);padding:5px 10px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+.who{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.who .field{flex:1 1 240px;max-width:380px}
+label{font-weight:600;font-size:.9rem;display:block;margin-bottom:6px}
+input[type=text],textarea{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:.65em .85em;width:100%}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field.bad input{border-color:var(--err)}
+.msg{font-size:.85rem;color:var(--err);margin-top:4px}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:36px;padding-block:32px 64px;align-items:start}
+.passage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 24px 24px 34px;position:sticky}
+.passage::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin);opacity:.5}
+.passage{position:sticky}
+.passage h2{font:600 1.35rem var(--f-read);margin:6px 0 14px}
+.passage p{font:400 1.04rem/1.8 var(--f-read);margin-bottom:12px;text-indent:1.4em}
+.passage .src{font:italic .92rem var(--f-read);color:var(--muted);text-indent:0;text-align:right}
+details.ptoggle{display:none}
+
+.qs{display:grid;gap:18px;min-width:0}
+.part{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:8px;flex-wrap:wrap}
+.part h2{font-size:1.25rem}
+.part span{font:500 .78rem var(--f-mono);color:var(--muted)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;min-width:0}
+.q.ok{border-color:var(--ok)}
+.q.bad{border-color:var(--err)}
+.qhead{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.qnum{font:800 1rem var(--f-display);color:var(--accent);white-space:nowrap}
+.pts{font:500 .74rem var(--f-mono);color:var(--muted);white-space:nowrap}
+.qtext{font-weight:500}
+.quote{font:italic 1rem/1.7 var(--f-read);padding:10px 14px;border-left:3px solid var(--hl);background:var(--hl-soft);border-radius:0 8px 8px 0}
+
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--accent)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font:600 .82rem var(--f-mono);color:var(--muted)}
+.opt.multi .k{border-radius:7px}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt:has(input:checked) .k{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.opt.is-right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.is-right .k{border-color:var(--ok);background:var(--ok);color:#fff}
+.opt.is-wrong{border-color:var(--err);background:var(--err-soft)}
+.opt.is-wrong .k{border-color:var(--err);background:var(--err);color:#fff}
+.locked .opt{cursor:default}
+
+.hint{font-size:.85rem;color:var(--muted)}
+.sentence{font:1.06rem/2.3 var(--f-read);display:flex;flex-wrap:wrap;gap:2px 4px;align-items:baseline}
+.tok{all:unset;cursor:pointer;padding:0 4px;border-radius:5px;border-bottom:3px solid transparent;transition:background .1s}
+.tok:hover{background:var(--accent-soft)}
+.tok:focus-visible{outline:2px solid var(--accent)}
+.tok.on{border-bottom-color:var(--accent);background:var(--accent-soft)}
+.tok.hit{border-bottom-color:var(--ok);background:var(--ok-soft)}
+.tok.wrong{border-bottom-color:var(--err);background:var(--err-soft);text-decoration:line-through}
+.tok.miss{outline:2px dashed var(--ok);outline-offset:-2px}
+.punct{margin-left:-6px}
+.count{font:500 .78rem var(--f-mono);color:var(--muted)}
+
+.explain{display:grid;gap:6px;padding:12px 14px;border-radius:10px;background:var(--paper);border:1px solid var(--line);font-size:.95rem}
+.explain b{font-weight:600}
+.verdict.ok{color:var(--ok)}.verdict.bad{color:var(--err)}.verdict.wait{color:var(--accent)}
+
+.essay textarea{min-height:240px;font:1rem/1.8 var(--f-read)}
+.wc{font:500 .78rem var(--f-mono);color:var(--muted);text-align:right}
+.tips{margin:0;padding-left:1.1em;color:var(--muted);font-size:.92rem;display:grid;gap:2px}
+
+.submitbar{position:sticky;bottom:0;padding-bottom:env(safe-area-inset-bottom,0px);background:linear-gradient(transparent,var(--paper) 30%);padding-top:18px}
+.submitbar .in{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.prog{font-size:.9rem;color:var(--muted)}
+.prog b{color:var(--ink);font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:600 1rem var(--f-body);border-radius:999px;padding:.75em 1.4em;background:var(--accent);color:var(--accent-ink);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+
+/* result */
+.result{background:var(--card);border:2px solid var(--accent);border-radius:18px;padding:22px;display:grid;gap:16px}
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score b{font:800 3rem/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--accent)}
+.score span{color:var(--muted)}
+.mistakes{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.mistakes li{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:8px;background:var(--err-soft);font-size:.95rem}
+.mistakes li a{font:600 .82rem var(--f-mono);color:var(--err);white-space:nowrap}
+.allgood{padding:10px 12px;border-radius:8px;background:var(--ok-soft);color:var(--ok);font-weight:600}
+.sent{font-size:.88rem;color:var(--muted)}
+.demo-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:12px;background:var(--hl-soft)}
+.ractions{display:flex;gap:10px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr;gap:20px}
+  .passage{position:relative;top:auto;max-height:none}
+  .passage.collapsed .body{max-height:9.5em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent)}
+  details.ptoggle{display:block}
+  .more{all:unset;cursor:pointer;font-weight:600;color:var(--accent);font-size:.92rem;margin-top:6px}
+}
+@media (min-width:901px){ .more{display:none} }
+@media (max-width:520px){ .q{padding:16px} .passage{padding:18px 16px 18px 28px} .passage::before{left:13px} }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="wrap">
+    <div class="brandline">
+      <div class="brand"><span class="mark">?!</span>Tò Mò Học Tiếng Việt</div>
+      <div class="meta"><a class="pill cta" href="./#khoa-hoc">Xem khóa học →</a><span class="pill">TIẾNG VIỆT 4</span><span class="pill">PHIẾU 02</span><span class="pill">ĐỌC HIỂU + TẬP LÀM VĂN</span></div>
+    </div>
+    <h1>Phiếu 02 · Niềm tin</h1>
+    <div class="who">
+      <div class="field" id="wName">
+        <label for="studentName">Họ và tên học sinh</label>
+        <input type="text" id="studentName" autocomplete="name" placeholder="Ví dụ: Nguyễn Minh Anh">
+        <div class="msg" hidden>Con nhập họ tên để cô biết bài này của ai nhé.</div>
+      </div>
+      <p class="hint" style="flex:1 1 260px">Đọc kĩ đoạn văn, làm hết các câu rồi bấm <b>Nộp bài</b>. Máy chấm ngay phần trắc nghiệm và gạch chân. Câu 8 và bài văn cô sẽ chấm.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <article class="passage collapsed" id="passage">
+      <span class="eyebrow">Bài đọc</span>
+      <h2>Niềm tin</h2>
+      <div class="body">
+        <p>Một trận động đất xảy ra tại một trường học ở Mĩ. Khung cảnh hoang tàn của ngôi trường sau động đất làm cha mẹ học sinh bật khóc vì tuyệt vọng.</p>
+        <p>Trong khi đội cứu hộ cố gắng cứu các em bé trong những lớp học ít bị đổ nát, một người đàn ông cứ xông vào nơi nguy hiểm như con thiêu thân. Những bức tường có thể sập xuống bất kì lúc nào, ông luôn miệng gọi tên con. Mọi người lo sợ ông phát cuồng vì mất con, làm cản trở công việc của những người cứu hộ nên đã khuyên ông ra ngoài, nhưng ông nói: “Tôi đã hứa với Pôn rằng lúc nào tôi cũng ở bên con, cho dù bất cứ chuyện gì xảy ra”.</p>
+        <p>Khi đội cứu hộ bắt đầu dừng tay và cho rằng họ đã cứu hết những người bị nạn ra khỏi đống gạch thì ông vẫn kiên nhẫn tìm kiếm. Bỗng ông nghe tiếng gọi thật yếu ớt ngắt quãng vọng lên từ đâu đó: “Bố ơi! Chúng con đây nè”. Ông điên cuồng đào bới, mọi người xung quanh vội chạy đến hỗ trợ. Như một phép lạ, dưới đống gạch đổ nát là một khoảng trống. Trong đó, gần hai chục đứa trẻ đang nhìn ông với ánh mắt đợi chờ. Ông lần lượt kéo từng đứa trẻ lên, và Pôn, con trai ông là người lên sau cùng.</p>
+        <p>Trong vòng tay của bố, cậu bé nói trong nước mắt: “Con biết bố không bao giờ bỏ con mà. Các bạn không tin con và sợ lắm nên con chờ bố đến và để các bạn ra trước vì bố sẽ không bao giờ bỏ con đâu!”</p>
+        <p class="src">(Theo Những hạt giống tâm hồn)</p>
+      </div>
+      <button class="more" type="button" id="moreBtn">Đọc cả bài ▾</button>
+    </article>
+
+    <div class="qs" id="qs">
+      <div id="resultSlot"></div>
+      <div class="part"><h2>Phần 1. Đọc hiểu</h2><span>KHOANH ĐÁP ÁN · GẠCH CHÂN · TRẢ LỜI</span></div>
+      <div id="questions" style="display:grid;gap:18px"></div>
+      <div class="part"><h2>Phần 2. Tập làm văn</h2><span>CÔ CHẤM</span></div>
+      <section class="q essay" id="q-essay">
+        <div class="qhead"><span class="qnum">Đề bài</span><span class="pts">8 điểm · cô chấm</span></div>
+        <p class="qtext">Hãy tả về chiếc bút mà em yêu quý.</p>
+        <ul class="tips">
+          <li>Mở bài: giới thiệu chiếc bút (ai tặng, có từ khi nào).</li>
+          <li>Thân bài: tả bao quát, rồi tả từng bộ phận; kể kỉ niệm với chiếc bút.</li>
+          <li>Kết bài: tình cảm của em với chiếc bút.</li>
+        </ul>
+        <textarea id="essay" aria-label="Bài văn tả chiếc bút" placeholder="Con viết bài văn ở đây..."></textarea>
+        <div class="wc" id="wc">0 chữ</div>
+      </section>
+      <div class="submitbar">
+        <div class="in">
+          <span class="prog" id="prog">Đã làm <b>0/9</b> câu</span>
+          <button class="btn" id="submitBtn" type="button">Nộp bài</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ========== CẤU HÌNH ==========
+   sheetUrl: link Web App của Google Apps Script để nhận kết quả (để trống nếu chưa kết nối) */
+const CONFIG = { sheetUrl: "", worksheet: "Tiếng Việt 4 · Phiếu 02" };
+
+/* ========== NỘI DUNG ĐỀ ==========
+   type: "mc" (chọn 1) · "multi" (chọn nhiều) · "tag" (bấm chọn từ) · "open" (cô chấm) */
+const QUESTIONS = [
+  { id:"c1", type:"mc", points:0.5, topic:"Đọc hiểu: tìm chi tiết",
+    text:"Vì sao sau trận động đất, bố của Pôn xông vào nơi nguy hiểm như con thiêu thân để cứu con?",
+    options:{a:"Vì ông mất con nên phát cuồng, muốn trực tiếp cứu ngay đứa con", b:"Vì ông không tin tưởng vào đội cứu hộ có thể cứu được con mình", c:"Vì ông đã hứa lúc nào cũng ở bên con, dù bất cứ chuyện gì xảy ra"},
+    answer:"c",
+    explain:"Chính người bố nói lí do: ông đã hứa với Pôn sẽ luôn ở bên con. Ý a chỉ là điều mọi người lo sợ, không phải lí do thật. Bài không nhắc gì đến việc ông không tin đội cứu hộ." },
+  { id:"c2", type:"mc", points:0.5, topic:"Đọc hiểu: tìm chi tiết",
+    text:"Sau khi đội cứu hộ đã ngừng tìm kiếm, bố của Pôn đã làm gì?",
+    options:{a:"Ông vẫn điên cuồng đào bới", b:"Ông vẫn kiên nhẫn tìm con", c:"Ông vẫn lắng nghe tiếng gọi của con"},
+    answer:"b",
+    explain:"Câu văn ghi: khi đội cứu hộ dừng tay thì ông vẫn kiên nhẫn tìm kiếm. Ông chỉ điên cuồng đào bới sau khi nghe tiếng gọi, và lúc đội cứu hộ dừng tay thì chưa có tiếng gọi nào." },
+  { id:"c3", type:"mc", points:0.5, topic:"Đọc hiểu: hiểu nhân vật",
+    text:"Vì sao khi được cứu, Pôn nhường các bạn lên trước, còn mình ra cuối cùng?",
+    options:{a:"Vì Pôn biết các bạn rất hoảng sợ, tranh ra trước", b:"Vì Pôn là một người dũng cảm, không biết sợ", c:"Vì Pôn tin bố sẽ không bao giờ bỏ mình"},
+    answer:"c",
+    explain:"Pôn tự nói cậu để các bạn ra trước vì bố sẽ không bao giờ bỏ cậu. Các bạn sợ thật, nhưng điều giúp Pôn bình tĩnh nhường bạn là niềm tin vào bố." },
+  { id:"c4", type:"mc", points:1, topic:"Đọc hiểu: thông điệp",
+    text:"Câu chuyện muốn gửi đến em thông điệp gì?",
+    options:{a:"Hãy tin vào khả năng của mình, không thể dựa vào người khác", b:"Hãy kiên nhẫn hành động vì nhất định sẽ đạt kết quả tốt đẹp", c:"Hãy tin chắc rằng: dù bất kì điều gì xảy ra, cha mẹ luôn bên ta"},
+    answer:"c",
+    explain:"Tên truyện là “Niềm tin”, và lời Pôn ở cuối truyện nói về niềm tin vào bố. Sự kiên nhẫn (ý b) có trong truyện nhưng chỉ là một phần, không phải thông điệp chính." },
+  { id:"c5", type:"tag", points:0.5, topic:"Từ loại: danh từ",
+    text:"Gạch chân các danh từ trong câu sau:",
+    hint:"Bấm vào từ để gạch chân, bấm lần nữa để bỏ.",
+    tokens:["Ông","lần lượt","kéo","từng","đứa trẻ","lên",",","và","Pôn",",","con trai","ông","là","người","lên","sau cùng","."],
+    correct:["đứa trẻ","Pôn","con trai","người"], neutral:["Ông","ông"],
+    explain:"Danh từ chỉ người: <b>đứa trẻ, con trai, người</b>. Danh từ riêng: <b>Pôn</b> (tên riêng nên viết hoa). Từ <b>ông</b> ở đây dùng để gọi thay cho người bố (lên lớp 5 con sẽ học là đại từ xưng hô), nên chọn hay không chọn đều không bị trừ điểm. <b>Lần lượt, sau cùng</b> chỉ thứ tự, không phải danh từ." },
+  { id:"c6", type:"tag", points:0.5, topic:"Từ loại: động từ", need:5,
+    text:"Gạch dưới 5 động từ trong câu sau:",
+    hint:"Chọn đúng 5 từ chỉ hoạt động, trạng thái.",
+    tokens:["Trong khi","đội cứu hộ","cố gắng","cứu","các","em bé","trong","những","lớp học","ít","bị","đổ nát",",","một","người","đàn ông","cứ","xông","vào","nơi","nguy hiểm","như","con","thiêu thân","."],
+    correct:["cố gắng","cứu","bị","đổ nát","xông","vào"], max:5,
+    explain:"Các động từ trong câu: <b>cố gắng, cứu, xông</b> (hoạt động), <b>bị, đổ nát</b> (trạng thái), <b>vào</b> (chỉ hướng của hoạt động xông). Con chọn được 5 từ trong số này là đủ điểm. Lưu ý <b>cứu hộ</b> nằm trong cụm “đội cứu hộ”, là tên của một nhóm người nên không tính." },
+  { id:"c7", type:"mc", points:1, topic:"Câu: chủ ngữ",
+    text:"Trong câu “Khung cảnh hoang tàn của ngôi trường sau động đất làm cha mẹ học sinh bật khóc vì tuyệt vọng”, bộ phận nào là chủ ngữ?",
+    options:{a:"Khung cảnh hoang tàn", b:"Khung cảnh hoang tàn của ngôi trường", c:"Khung cảnh hoang tàn của ngôi trường sau động đất"},
+    answer:"c",
+    explain:"Hỏi: <i>Cái gì</i> làm cha mẹ học sinh bật khóc? Trả lời bằng cả cụm “khung cảnh hoang tàn của ngôi trường sau động đất”. Vị ngữ bắt đầu từ chữ <b>làm</b>. Ý a và b cắt mất một phần của chủ ngữ." },
+  { id:"c8", type:"open", points:1, topic:"Cảm thụ: tình phụ tử",
+    text:"Từ những hành động của người bố trong câu chuyện, em có cảm nhận như thế nào về tình phụ tử? Hãy tìm những hành động thể hiện tình cảm đó.",
+    placeholder:"Ví dụ: Người bố rất thương con. Ông đã...",
+    explain:"Gợi ý ý chính: xông vào nơi nguy hiểm, luôn miệng gọi tên con, giữ lời hứa, kiên nhẫn tìm khi mọi người đã dừng, đào bới khi nghe tiếng con. Cô sẽ chấm và nhận xét câu này." },
+  { id:"c9", type:"multi", points:0.5, topic:"Câu hỏi dùng vào mục đích khác",
+    text:"Những câu hỏi nào dưới đây không dùng vào mục đích hỏi?",
+    hint:"Có thể có nhiều hơn một đáp án.",
+    options:{1:"Cậu đang làm gì đấy?", 2:"Cậu không thấy đàn réo à?", 3:"Bạn biết chơi cờ vua không?", 4:"Nếu bình thường vậy, sao bông hoa kia lại có vẻ biết ơn bạn?"},
+    answer:["2","4"],
+    explain:"Câu 2 dùng để <b>chê, phàn nàn</b> (ý là tiếng đàn réo khó chịu). Câu 4 dùng để <b>khẳng định</b> rằng bạn đã làm việc tốt nên bông hoa biết ơn. Câu 1 và 3 là hỏi thật, người nói cần câu trả lời." }
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = n => (Math.round(n*100)/100).toLocaleString("vi-VN");
+const isWord = t => !/^[,.;:!?]$/.test(t);
+let graded = false;
+
+// render
+const host = $("#questions");
+QUESTIONS.forEach((q,i) => {
+  const s = document.createElement("section");
+  s.className = "q"; s.id = "q-"+q.id;
+  let body = "";
+  if(q.type==="mc" || q.type==="multi"){
+    const t = q.type==="mc" ? "radio" : "checkbox";
+    body = `<div class="opts" role="${q.type==='mc'?'radiogroup':'group'}" aria-label="Câu ${i+1}">` +
+      Object.entries(q.options).map(([k,v]) => `<label class="opt ${q.type==='multi'?'multi':''}" data-k="${k}"><input type="${t}" name="${q.id}" value="${k}" id="${q.id}-${k}"><span class="k">${k}</span><span>${esc(v)}</span></label>`).join("") + `</div>`;
+  } else if(q.type==="tag"){
+    body = `<div class="sentence">` + q.tokens.map((t,j) => isWord(t)
+      ? `<button type="button" class="tok" data-i="${j}" aria-pressed="false">${esc(t)}</button>`
+      : `<span class="punct">${esc(t)}</span>`).join(" ") + `</div><div class="count" id="${q.id}-count">Đã chọn 0 từ${q.need?` / ${q.need}`:""}</div>`;
+  } else if(q.type==="open"){
+    body = `<textarea id="${q.id}-text" rows="5" aria-label="Câu trả lời câu ${i+1}" placeholder="${esc(q.placeholder||'')}"></textarea>`;
+  }
+  s.innerHTML = `<div class="qhead"><span class="qnum">Câu ${i+1}</span><span class="pts">${fmt(q.points)} điểm${q.type==='open'?' · cô chấm':''}</span></div>
+    <p class="qtext">${esc(q.text)}</p>${q.hint?`<p class="hint">${esc(q.hint)}</p>`:""}${body}<div class="explain" hidden></div>`;
+  host.appendChild(s);
+});
+
+// interactions
+host.addEventListener("click", e => {
+  const t = e.target.closest(".tok"); if(!t || graded) return;
+  t.classList.toggle("on"); t.setAttribute("aria-pressed", t.classList.contains("on"));
+  const sec = t.closest(".q"), q = QUESTIONS.find(x => "q-"+x.id === sec.id);
+  const n = sec.querySelectorAll(".tok.on").length;
+  $("#"+q.id+"-count").textContent = `Đã chọn ${n} từ${q.need?` / ${q.need}`:""}`;
+  progress();
+});
+document.addEventListener("input", progress);
+document.addEventListener("change", progress);
+$("#essay").addEventListener("input", () => {
+  const n = $("#essay").value.trim().split(/\s+/).filter(Boolean).length;
+  $("#wc").textContent = n + " chữ";
+});
+$("#moreBtn").onclick = () => { const p=$("#passage"); p.classList.toggle("collapsed"); $("#moreBtn").textContent = p.classList.contains("collapsed") ? "Đọc cả bài ▾" : "Thu gọn ▴"; };
+
+function answered(q){
+  const sec = $("#q-"+q.id);
+  if(q.type==="mc"||q.type==="multi") return !!sec.querySelector("input:checked");
+  if(q.type==="tag") return !!sec.querySelector(".tok.on");
+  return $("#"+q.id+"-text").value.trim().length>0;
+}
+function progress(){
+  if(graded) return;
+  const n = QUESTIONS.filter(answered).length;
+  $("#prog").innerHTML = `Đã làm <b>${n}/${QUESTIONS.length}</b> câu`;
+}
+
+// grading
+function grade(q){
+  const sec = $("#q-"+q.id);
+  if(q.type==="mc"){
+    const v = (sec.querySelector("input:checked")||{}).value;
+    sec.querySelectorAll(".opt").forEach(o => { if(o.dataset.k===q.answer) o.classList.add("is-right"); else if(o.dataset.k===v) o.classList.add("is-wrong"); });
+    return { score: v===q.answer ? q.points : 0, ok: v===q.answer, given: v||"" };
+  }
+  if(q.type==="multi"){
+    const vs = [...sec.querySelectorAll("input:checked")].map(x=>x.value);
+    sec.querySelectorAll(".opt").forEach(o => { if(q.answer.includes(o.dataset.k)) o.classList.add("is-right"); else if(vs.includes(o.dataset.k)) o.classList.add("is-wrong"); });
+    const ok = vs.length===q.answer.length && q.answer.every(a=>vs.includes(a));
+    return { score: ok ? q.points : 0, ok, given: vs.join(",") };
+  }
+  if(q.type==="tag"){
+    const need = q.max || q.correct.length;
+    let hits=0, wrong=0; const picked=[];
+    sec.querySelectorAll(".tok").forEach(b => {
+      const w = q.tokens[b.dataset.i], on = b.classList.contains("on");
+      if(on) picked.push(w);
+      if(on && q.correct.includes(w)){ b.classList.add("hit"); hits++; }
+      else if(on && !(q.neutral||[]).includes(w)){ b.classList.add("wrong"); wrong++; }
+      else if(!on && q.correct.includes(w) && !q.max){ b.classList.add("miss"); }
+      b.classList.remove("on");
+    });
+    if(q.max && hits < need) sec.querySelectorAll(".tok").forEach(b => { if(!b.classList.contains("hit") && q.correct.includes(q.tokens[b.dataset.i])) b.classList.add("miss"); });
+    const frac = Math.max(0, (Math.min(hits,need) - wrong) / need);
+    const score = Math.round(q.points*frac*4)/4;
+    return { score, ok: frac===1, partial: frac>0 && frac<1, given: picked.join(", ") };
+  }
+  return { score:null, ok:null, given: $("#"+q.id+"-text").value.trim() };
+}
+
+$("#submitBtn").onclick = () => {
+  const name = $("#studentName").value.trim();
+  const w = $("#wName");
+  if(name.length < 2){ w.classList.add("bad"); w.querySelector(".msg").hidden=false; $("#studentName").focus(); return; }
+  w.classList.remove("bad"); w.querySelector(".msg").hidden=true;
+  if(graded) return;
+  graded = true;
+  const res = {}; let total=0, max=0; const mistakes=[];
+  QUESTIONS.forEach((q,i) => {
+    const r = grade(q); res[q.id]=r;
+    const sec = $("#q-"+q.id); sec.classList.add("locked");
+    sec.querySelectorAll("input,textarea").forEach(x => x.disabled = true);
+    const ex = sec.querySelector(".explain"); ex.hidden = false;
+    let verdict;
+    if(r.score===null){ verdict = `<span class="verdict wait">Đã ghi lại câu trả lời, cô sẽ chấm.</span>`; }
+    else{
+      total += r.score; max += q.points;
+      if(r.ok){ sec.classList.add("ok"); verdict = `<span class="verdict ok">Đúng rồi · +${fmt(r.score)} điểm</span>`; }
+      else{ sec.classList.add("bad"); verdict = `<span class="verdict bad">${r.partial?`Đúng một phần · +${fmt(r.score)} điểm`:"Chưa đúng · 0 điểm"}</span>`; mistakes.push({i:i+1, id:q.id, topic:q.topic}); }
+    }
+    ex.innerHTML = `${verdict}<div>${q.explain}</div>`;
+  });
+  $("#essay").disabled = true;
+  showResult(name, total, max, mistakes);
+  send(name, total, max, res);
+};
+
+function showResult(name, total, max, mistakes){
+  $("#resultSlot").innerHTML = `<section class="result" aria-live="polite">
+    <span class="eyebrow">Kết quả của ${esc(name)}</span>
+    <div class="score"><b>${fmt(total)}</b><span>/ ${fmt(max)} điểm phần máy chấm · Câu 8 và bài văn cô chấm sau</span></div>
+    ${mistakes.length ? `<div><h3 style="font-size:1rem;margin-bottom:8px">Phần cần ôn lại</h3><ul class="mistakes">${mistakes.map(m=>`<li><a href="#q-${m.id}">Câu ${m.i}</a><span>${esc(m.topic)}</span></li>`).join("")}</ul></div>` : `<div class="allgood">Con làm đúng hết phần máy chấm. Giỏi lắm!</div>`}
+    <p class="hint">Xem lại từng câu bên dưới: đáp án đúng tô xanh, câu chọn sai tô đỏ, kèm lời giải thích. Ghi những lỗi sai vào sổ tay ngữ pháp nhé.</p>
+    <p class="sent" id="sent"></p>
+    <div class="demo-cta"><div><b>Muốn con luyện như thế này mỗi tuần?</b><p class="hint">Mỗi tuần một bài, có chấm chữa và cô nhận xét bài viết.</p></div><a class="btn" href="./#dang-ky">Đăng ký khóa học</a></div>
+    <div class="ractions"><button class="btn ghost" type="button" id="retry">Làm lại từ đầu</button></div>
+  </section>`;
+  $("#retry").onclick = () => location.reload();
+  $("#prog").innerHTML = `Điểm: <b>${fmt(total)}/${fmt(max)}</b>`;
+  $("#submitBtn").hidden = true;
+  $("#resultSlot").scrollIntoView({block:"start"});
+}
+
+async function send(name, total, max, res){
+  if(!CONFIG.sheetUrl) return;
+  const el = $("#sent"); el.textContent = "Đang gửi bài cho cô...";
+  const payload = { time:new Date().toISOString(), worksheet:CONFIG.worksheet, name, score:total, max,
+    answers:Object.fromEntries(Object.entries(res).map(([k,v])=>[k,v.given])), essay:$("#essay").value.trim() };
+  try{
+    await fetch(CONFIG.sheetUrl, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload) });
+    el.textContent = "Đã gửi bài cho cô.";
+  }catch(e){ el.textContent = "Chưa gửi được bài cho cô. Con chụp màn hình kết quả và gửi qua Zalo nhé."; }
+}
+</script>
+</body>
+</html>
